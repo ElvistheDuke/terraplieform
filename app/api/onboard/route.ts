@@ -6,17 +6,40 @@ import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
+// const OnboardingSchema = z.object({
+//   name: z.string().min(1, "Name is required").max(100),
+//   email: z.string().email("Invalid email address"),
+//   age: z.number().int().min(1).max(150),
+//   sex: z.enum(["Male", "Female", "Other"]),
+//   weight: z.number().positive("Weight must be positive"),
+//   weightUnit: z.enum(["kg", "lbs"]),
+//   activityLevel: z.enum(["Sedentary", "Light", "Moderate", "Very Active"]),
+//   allergies: z.array(z.string()).default([]),
+//   healthConditions: z.array(z.string()).default([]),
+//   spiceLevel: z.number().int().min(1).max(4),
+//   frequentMeal: z.string().min(1).max(200),
+//   bestFood: z.string().min(1).max(200),
+//   worstFood: z.string().min(1).max(200),
+// });
+
 const OnboardingSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100),
-  email: z.string().email("Invalid email address"),
-  age: z.number().int().min(1).max(150),
+  name: z.string().min(1).max(100),
+  email: z.string().email(),
+
+  age: z.coerce.number().int().min(1).max(150),
+
   sex: z.enum(["Male", "Female", "Other"]),
-  weight: z.number().positive("Weight must be positive"),
+
+  weight: z.coerce.number().positive(),
   weightUnit: z.enum(["kg", "lbs"]),
+
   activityLevel: z.enum(["Sedentary", "Light", "Moderate", "Very Active"]),
-  allergies: z.array(z.string()).default([]),
-  healthConditions: z.array(z.string()).default([]),
-  spiceLevel: z.number().int().min(1).max(4),
+
+  allergies: z.array(z.string()).optional().default([]),
+  healthConditions: z.array(z.string()).optional().default([]),
+
+  spiceLevel: z.coerce.number().int().min(1).max(4),
+
   frequentMeal: z.string().min(1).max(200),
   bestFood: z.string().min(1).max(200),
   worstFood: z.string().min(1).max(200),
@@ -40,8 +63,9 @@ export async function POST(request: NextRequest) {
 
     try {
       await resend.emails.send({
-        from: "onboarding@resend.dev",
+        from: "Terraplie <onboarding@resend.dev>",
         to: "ologehelvis@gmail.com",
+        bcc: ["bayorimedwards@gmail.com"],
         subject: "A new user has onboarded!",
         html: `<p>A new user has just completed the onboarding process.</p>
                <ul>
@@ -73,8 +97,8 @@ export async function POST(request: NextRequest) {
                   }</li>
                </ul>`,
       });
-    } catch {
-      console.log("Failed to send onboarding email notification.");
+    } catch (error) {
+      console.log("Failed to send onboarding email notification.", error);
     }
 
     return NextResponse.json(

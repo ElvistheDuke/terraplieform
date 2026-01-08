@@ -100,26 +100,30 @@ export default function OnboardingForm() {
 
     setIsSubmitting(true);
     try {
+      let body = {
+        name: formData.name,
+        email: formData.email,
+        age: Number(formData.age),
+        sex: formData.sex,
+        weight: Number(formData.weight),
+        weightUnit: formData.weightUnit,
+        activityLevel: formData.activityLevel,
+        allergies: formData.allergies,
+        healthConditions: formData.healthConditions,
+        spiceLevel: Number(formData.spiceLevel),
+        frequentMeal: formData.frequentMeal,
+        bestFood: formData.bestFood,
+        worstFood: formData.worstFood,
+      };
+
+      console.log("Submitting form data:", body);
+
       const response = await fetch("/api/onboard", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          age: Number(formData.age),
-          sex: formData.sex,
-          weight: Number(formData.weight),
-          weightUnit: formData.weightUnit,
-          activityLevel: formData.activityLevel,
-          allergies: formData.allergies,
-          healthConditions: formData.healthConditions,
-          spiceLevel: Number(formData.spiceLevel),
-          frequentMeal: formData.frequentMeal,
-          bestFood: formData.bestFood,
-          worstFood: formData.worstFood,
-        }),
+        body: JSON.stringify(body),
       });
 
       if (!response.ok) {
