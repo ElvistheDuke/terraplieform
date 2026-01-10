@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: "Terraplie <notifications@terraplie.com>",
         to: "ologehelvis@gmail.com",
-        bcc: ["Admin@terraplie.com"],
+        bcc: ["admin@terraplie.com"],
         subject: "A new user has onboarded!",
         html: `<p>A new user has just completed the onboarding process.</p>
                <ul>

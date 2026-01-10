@@ -86,7 +86,7 @@ export default function MetricsStep({ data, onUpdate }: MetricsStepProps) {
         <Label className="text-base font-medium">
           What's your fitness goal?
         </Label>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {(["Lose Weight", "Maintain Weight", "Gain Muscle"] as const).map(
             (goal) => (
               <Button
