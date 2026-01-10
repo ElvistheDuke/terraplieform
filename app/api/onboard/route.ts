@@ -43,6 +43,9 @@ const OnboardingSchema = z.object({
   frequentMeal: z.string().min(1).max(200),
   bestFood: z.string().min(1).max(200),
   worstFood: z.string().min(1).max(200),
+  phone: z.string().min(0).max(20).optional(),
+  address: z.string().min(0).max(200).optional(),
+  fitnessGoal: z.enum(["Lose Weight", "Maintain Weight", "Gain Muscle"]),
 });
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
@@ -63,7 +66,7 @@ export async function POST(request: NextRequest) {
 
     try {
       await resend.emails.send({
-        from: "Terraplie <onboarding@resend.dev>",
+        from: "Terraplie <notifications@terraplie.com>",
         to: "ologehelvis@gmail.com",
         bcc: ["bayorimedwards@gmail.com"],
         subject: "A new user has onboarded!",
@@ -71,6 +74,12 @@ export async function POST(request: NextRequest) {
                <ul>
                  <li><strong>Name:</strong> ${validatedData.name}</li>
                  <li><strong>Email:</strong> ${validatedData.email}</li>
+                 <li><strong>Phone:</strong> ${
+                   validatedData.phone || "Not provided"
+                 }</li>
+                 <li><strong>Address:</strong> ${
+                   validatedData.address || "Not provided"
+                 }</li>
                  <li><strong>Age:</strong> ${validatedData.age}</li>
                   <li><strong>Sex:</strong> ${validatedData.sex}</li>
                   <li><strong>Weight:</strong> ${validatedData.weight} ${
@@ -78,6 +87,9 @@ export async function POST(request: NextRequest) {
         }</li>
                   <li><strong>Activity Level:</strong> ${
                     validatedData.activityLevel
+                  }</li>
+                  <li><strong>Fitness Goal:</strong> ${
+                    validatedData.fitnessGoal
                   }</li>
                   <li><strong>Allergies:</strong> ${
                     validatedData.allergies.join(", ") || "None"
@@ -95,6 +107,7 @@ export async function POST(request: NextRequest) {
                   <li><strong>Worst Food:</strong> ${
                     validatedData.worstFood
                   }</li>
+
                </ul>`,
       });
     } catch (error) {

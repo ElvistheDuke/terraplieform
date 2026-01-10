@@ -5,12 +5,15 @@ export interface IUser extends Document {
   name: string;
   email: string;
   age: number;
+  phone: string;
+  address: string;
   sex: "Male" | "Female" | "Other";
 
   // Metrics
   weight: number;
   weightUnit: "kg" | "lbs";
   activityLevel: "Sedentary" | "Light" | "Moderate" | "Very Active";
+  fitnessGoal: "Lose Weight" | "Maintain Weight" | "Gain Muscle";
 
   // Health
   allergies: string[];
@@ -39,15 +42,30 @@ const UserSchema = new Schema<IUser>(
       required: false,
       trim: true,
     },
+    phone: {
+      type: String,
+      required: false,
+      trim: true,
+    },
     age: {
       type: Number,
       required: true,
       min: 1,
       max: 150,
     },
+    address: {
+      type: String,
+      required: false,
+      trim: true,
+    },
     sex: {
       type: String,
       enum: ["Male", "Female", "Other"],
+      required: true,
+    },
+    fitnessGoal: {
+      type: String,
+      enum: ["Lose Weight", "Maintain Weight", "Gain Muscle"],
       required: true,
     },
 

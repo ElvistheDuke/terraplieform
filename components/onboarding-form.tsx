@@ -16,6 +16,9 @@ export interface FormData {
   // Identity
   name: string;
   email: string;
+  phone: string;
+  address: string;
+  fitnessGoal: "Lose Weight" | "Maintain Weight" | "Gain Muscle" | "";
   age: number | "";
   sex: "Male" | "Female" | "Other" | "";
 
@@ -44,6 +47,9 @@ export default function OnboardingForm() {
     name: "",
     email: "",
     age: "",
+    phone: "",
+    address: "",
+    fitnessGoal: "",
     sex: "",
     weight: "",
     weightUnit: "kg",
@@ -63,9 +69,20 @@ export default function OnboardingForm() {
   const isStepValid = (): boolean => {
     switch (currentStep) {
       case 0: // Identity
-        return !!(formData.name && formData.age && formData.sex);
+        return !!(
+          formData.name &&
+          formData.age &&
+          formData.sex &&
+          formData.email &&
+          formData.phone &&
+          formData.address
+        );
       case 1: // Metrics
-        return !!(formData.weight && formData.activityLevel);
+        return !!(
+          formData.weight &&
+          formData.activityLevel &&
+          formData.fitnessGoal
+        );
       case 2: // Health
         return true; // Optional step
       case 3: // Palate
@@ -114,6 +131,9 @@ export default function OnboardingForm() {
         frequentMeal: formData.frequentMeal,
         bestFood: formData.bestFood,
         worstFood: formData.worstFood,
+        phone: formData.phone,
+        address: formData.address,
+        fitnessGoal: formData.fitnessGoal,
       };
 
       console.log("Submitting form data:", body);

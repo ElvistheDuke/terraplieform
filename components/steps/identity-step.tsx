@@ -35,6 +35,20 @@ export default function IdentityStep({ data, onUpdate }: IdentityStepProps) {
         />
       </div>
 
+      {/* Phone Number */}
+      <div className="space-y-2">
+        <Label htmlFor="phone" className="text-base font-medium">
+          What&apos;s your phone number?
+        </Label>
+        <Input
+          id="phone"
+          value={data.phone}
+          onChange={(e) => onUpdate({ phone: e.target.value })}
+          placeholder="(123) 456-7890"
+          className="text-lg py-6"
+        />
+      </div>
+
       {/* Email */}
       <div className="space-y-2">
         <Label htmlFor="email" className="text-base font-medium">
@@ -46,6 +60,20 @@ export default function IdentityStep({ data, onUpdate }: IdentityStepProps) {
           value={data.email}
           onChange={(e) => onUpdate({ email: e.target.value })}
           placeholder="john@example.com"
+          className="text-lg py-6"
+        />
+      </div>
+
+      {/* Address */}
+      <div className="space-y-2">
+        <Label htmlFor="address" className="text-base font-medium">
+          What&apos;s your address?
+        </Label>
+        <Input
+          id="address"
+          value={data.address}
+          onChange={(e) => onUpdate({ address: e.target.value })}
+          placeholder="123 Main St, City, State"
           className="text-lg py-6"
         />
       </div>
