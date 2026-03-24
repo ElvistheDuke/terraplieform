@@ -43,6 +43,7 @@ const TOTAL_STEPS = 5; // 4 steps + 1 success
 export default function OnboardingForm() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -73,7 +74,7 @@ export default function OnboardingForm() {
           formData.name &&
           formData.age &&
           formData.sex &&
-          formData.email &&
+          formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
           formData.phone &&
           formData.address
         );
@@ -116,6 +117,7 @@ export default function OnboardingForm() {
     }
 
     setIsSubmitting(true);
+    setErrorMessage(null);
     try {
       let body = {
         name: formData.name,
@@ -147,15 +149,18 @@ export default function OnboardingForm() {
       });
 
       if (!response.ok) {
-        console.log(response);
-        throw new Error("Failed to submit form");
+        const errorData = await response.json();
+        console.error("API error:", errorData);
+        setErrorMessage(errorData.message || "Something went wrong. Please try again.");
+        return;
       }
 
+      setErrorMessage(null);
       setCurrentStep(4); // Go to success step
       toast.success("Welcome to Terraplie!");
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
       console.error(error);
+      setErrorMessage("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -218,6 +223,13 @@ export default function OnboardingForm() {
             )}
           </AnimatePresence>
         </div>
+
+        {/* Error Alert */}
+        {errorMessage && (
+          <div className="mb-4 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <strong>Error:</strong> {errorMessage}
+          </div>
+        )}
 
         {/* Navigation */}
         {currentStep < 4 && (

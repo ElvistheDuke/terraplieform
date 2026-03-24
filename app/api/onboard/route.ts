@@ -4,6 +4,8 @@ import User from "@/models/User";
 import { z } from "zod";
 import { Resend } from "resend";
 
+console.log("MONGODB_URI:", process.env.MONGODB_URI);
+
 export const runtime = "nodejs";
 
 // const OnboardingSchema = z.object({
@@ -83,8 +85,8 @@ export async function POST(request: NextRequest) {
                  <li><strong>Age:</strong> ${validatedData.age}</li>
                   <li><strong>Sex:</strong> ${validatedData.sex}</li>
                   <li><strong>Weight:</strong> ${validatedData.weight} ${
-          validatedData.weightUnit
-        }</li>
+                    validatedData.weightUnit
+                  }</li>
                   <li><strong>Activity Level:</strong> ${
                     validatedData.activityLevel
                   }</li>
@@ -120,7 +122,7 @@ export async function POST(request: NextRequest) {
         message: "User onboarded successfully",
         userId: user._id,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -130,7 +132,7 @@ export async function POST(request: NextRequest) {
           message: "Validation error",
           error: error.message,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -138,9 +140,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        message: "Failed to onboard user",
+        message:
+          error instanceof Error ? error.message : "Failed to onboard user",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
