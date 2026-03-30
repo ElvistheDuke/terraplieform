@@ -311,7 +311,7 @@ export default function AdminDashboardContent() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => exportCSV(filteredUsers)}
+                  onClick={() => exportCSV(users)}
                   className="flex items-center gap-2 shrink-0"
                 >
                   <Download size={16} />
@@ -366,8 +366,8 @@ export default function AdminDashboardContent() {
             <CardContent>
               {paginatedUsers.length > 0 ? (
                 <>
-                  <div className="overflow-x-auto">
-                    <Table>
+                  <div className="overflow-x-auto -mx-6 px-6">
+                    <Table className="min-w-max">
                       <TableHeader>
                         <TableRow style={{ borderBottomColor: colors.border }}>
                           <SortableHead col="name" label="Name" />
