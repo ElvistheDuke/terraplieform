@@ -53,10 +53,23 @@ const ITEMS_PER_PAGE = 10;
 
 function exportCSV(users: User[]) {
   const headers = [
-    "Name", "Email", "Phone", "Address", "Age", "Sex",
-    "Weight", "WeightUnit", "ActivityLevel", "FitnessGoal",
-    "Allergies", "HealthConditions", "SpiceLevel",
-    "FrequentMeal", "BestFood", "WorstFood", "JoinedAt",
+    "Name",
+    "Email",
+    "Phone",
+    "Address",
+    "Age",
+    "Sex",
+    "Weight",
+    "WeightUnit",
+    "ActivityLevel",
+    "FitnessGoal",
+    "Allergies",
+    "HealthConditions",
+    "SpiceLevel",
+    "FrequentMeal",
+    "BestFood",
+    "WorstFood",
+    "JoinedAt",
   ];
   const rows = users.map((u) => [
     u.name,
@@ -149,12 +162,20 @@ export default function AdminDashboardContent() {
     }
 
     return result;
-  }, [users, searchQuery, filterSex, filterActivity, filterGoal, sortKey, sortDir]);
+  }, [
+    users,
+    searchQuery,
+    filterSex,
+    filterActivity,
+    filterGoal,
+    sortKey,
+    sortDir,
+  ]);
 
   const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE);
   const paginatedUsers = filteredUsers.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
+    currentPage * ITEMS_PER_PAGE,
   );
 
   const avgWeight =
@@ -177,13 +198,22 @@ export default function AdminDashboardContent() {
   };
 
   const SortIcon = ({ col }: { col: SortableKey }) => {
-    if (sortKey !== col) return <ChevronsUpDown size={14} className="inline ml-1 opacity-40" />;
-    return sortDir === "asc"
-      ? <ChevronUp size={14} className="inline ml-1" />
-      : <ChevronDown size={14} className="inline ml-1" />;
+    if (sortKey !== col)
+      return <ChevronsUpDown size={14} className="inline ml-1 opacity-40" />;
+    return sortDir === "asc" ? (
+      <ChevronUp size={14} className="inline ml-1" />
+    ) : (
+      <ChevronDown size={14} className="inline ml-1" />
+    );
   };
 
-  const SortableHead = ({ col, label }: { col: SortableKey; label: string }) => (
+  const SortableHead = ({
+    col,
+    label,
+  }: {
+    col: SortableKey;
+    label: string;
+  }) => (
     <TableHead>
       <button
         onClick={() => handleSort(col)}
@@ -217,12 +247,18 @@ export default function AdminDashboardContent() {
   }
 
   return (
-    <div style={{ backgroundColor: colors.lightBg }} className="min-h-screen py-8">
+    <div
+      style={{ backgroundColor: colors.lightBg }}
+      className="min-h-screen py-8"
+    >
       <div className="max-w-screen-xl mx-auto px-4">
         {/* Header */}
         <div className="flex items-start justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold mb-1" style={{ color: colors.slate }}>
+            <h1
+              className="text-4xl font-bold mb-1"
+              style={{ color: colors.slate }}
+            >
               Terraplie Admin
             </h1>
             <p className="text-gray-500 text-sm">
@@ -255,10 +291,15 @@ export default function AdminDashboardContent() {
             >
               <Card style={{ backgroundColor: colors.cream }}>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">{label}</CardTitle>
+                  <CardTitle className="text-sm font-medium text-gray-600">
+                    {label}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-3xl font-bold" style={{ color: colors.sage }}>
+                  <p
+                    className="text-3xl font-bold"
+                    style={{ color: colors.sage }}
+                  >
                     {value}
                   </p>
                 </CardContent>
@@ -273,20 +314,37 @@ export default function AdminDashboardContent() {
           >
             <Card style={{ backgroundColor: colors.cream }}>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600">Fitness Goals</CardTitle>
+                <CardTitle className="text-sm font-medium text-gray-600">
+                  Fitness Goals
+                </CardTitle>
               </CardHeader>
               <CardContent className="text-sm space-y-1">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Lose Weight</span>
-                  <span className="font-semibold" style={{ color: colors.sage }}>{goalCounts.lose}</span>
+                  <span
+                    className="font-semibold"
+                    style={{ color: colors.sage }}
+                  >
+                    {goalCounts.lose}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Maintain</span>
-                  <span className="font-semibold" style={{ color: colors.sage }}>{goalCounts.maintain}</span>
+                  <span
+                    className="font-semibold"
+                    style={{ color: colors.sage }}
+                  >
+                    {goalCounts.maintain}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Gain Muscle</span>
-                  <span className="font-semibold" style={{ color: colors.sage }}>{goalCounts.gain}</span>
+                  <span
+                    className="font-semibold"
+                    style={{ color: colors.sage }}
+                  >
+                    {goalCounts.gain}
+                  </span>
                 </div>
               </CardContent>
             </Card>
@@ -294,17 +352,26 @@ export default function AdminDashboardContent() {
         </div>
 
         {/* Table Card */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
           <Card style={{ backgroundColor: colors.cream }}>
             <CardHeader>
               {/* Search + Export */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                  <Search
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={16}
+                  />
                   <Input
                     placeholder="Search by name, email or phone..."
                     value={searchQuery}
-                    onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setCurrentPage(1);
+                    }}
                     className="pl-9"
                   />
                 </div>
@@ -323,7 +390,10 @@ export default function AdminDashboardContent() {
               <div className="flex flex-wrap gap-3 mt-3">
                 <select
                   value={filterSex}
-                  onChange={(e) => { setFilterSex(e.target.value); setCurrentPage(1); }}
+                  onChange={(e) => {
+                    setFilterSex(e.target.value);
+                    setCurrentPage(1);
+                  }}
                   className={selectClass}
                 >
                   <option value="All">All Sexes</option>
@@ -334,7 +404,10 @@ export default function AdminDashboardContent() {
 
                 <select
                   value={filterActivity}
-                  onChange={(e) => { setFilterActivity(e.target.value); setCurrentPage(1); }}
+                  onChange={(e) => {
+                    setFilterActivity(e.target.value);
+                    setCurrentPage(1);
+                  }}
                   className={selectClass}
                 >
                   <option value="All">All Activity Levels</option>
@@ -346,7 +419,10 @@ export default function AdminDashboardContent() {
 
                 <select
                   value={filterGoal}
-                  onChange={(e) => { setFilterGoal(e.target.value); setCurrentPage(1); }}
+                  onChange={(e) => {
+                    setFilterGoal(e.target.value);
+                    setCurrentPage(1);
+                  }}
                   className={selectClass}
                 >
                   <option value="All">All Goals</option>
@@ -355,7 +431,10 @@ export default function AdminDashboardContent() {
                   <option value="Gain Muscle">Gain Muscle</option>
                 </select>
 
-                {(filterSex !== "All" || filterActivity !== "All" || filterGoal !== "All" || searchQuery) && (
+                {(filterSex !== "All" ||
+                  filterActivity !== "All" ||
+                  filterGoal !== "All" ||
+                  searchQuery) && (
                   <span className="text-sm text-gray-500 self-center">
                     {filteredUsers.length} of {users.length} shown
                   </span>
@@ -366,7 +445,7 @@ export default function AdminDashboardContent() {
             <CardContent>
               {paginatedUsers.length > 0 ? (
                 <>
-                  <div className="overflow-x-auto -mx-6 px-6">
+                  <div className="overflow-x-auto overflow-y-scroll -mx-6 px-6">
                     <Table className="min-w-max">
                       <TableHeader>
                         <TableRow style={{ borderBottomColor: colors.border }}>
@@ -381,7 +460,10 @@ export default function AdminDashboardContent() {
                           <TableHead>Allergies</TableHead>
                           <TableHead>Conditions</TableHead>
                           <SortableHead col="spiceLevel" label="Spice" />
-                          <SortableHead col="frequentMeal" label="Frequent Meal" />
+                          <SortableHead
+                            col="frequentMeal"
+                            label="Frequent Meal"
+                          />
                           <SortableHead col="bestFood" label="Best Food" />
                           <SortableHead col="worstFood" label="Worst Food" />
                           <SortableHead col="createdAt" label="Joined" />
@@ -397,14 +479,24 @@ export default function AdminDashboardContent() {
                             className="border-b last:border-0"
                             style={{ borderColor: colors.border }}
                           >
-                            <TableCell className="font-medium whitespace-nowrap">{user.name}</TableCell>
-                            <TableCell className="text-sm">{user.email ?? "—"}</TableCell>
-                            <TableCell className="text-sm whitespace-nowrap">{user.phone ?? "—"}</TableCell>
+                            <TableCell className="font-medium whitespace-nowrap">
+                              {user.name}
+                            </TableCell>
+                            <TableCell className="text-sm">
+                              {user.email ?? "—"}
+                            </TableCell>
+                            <TableCell className="text-sm whitespace-nowrap">
+                              {user.phone ?? "—"}
+                            </TableCell>
                             <TableCell>{user.age}</TableCell>
                             <TableCell>{user.sex}</TableCell>
-                            <TableCell className="whitespace-nowrap">{user.weight} {user.weightUnit}</TableCell>
+                            <TableCell className="whitespace-nowrap">
+                              {user.weight} {user.weightUnit}
+                            </TableCell>
                             <TableCell>{user.activityLevel}</TableCell>
-                            <TableCell className="whitespace-nowrap">{user.fitnessGoal}</TableCell>
+                            <TableCell className="whitespace-nowrap">
+                              {user.fitnessGoal}
+                            </TableCell>
                             <TableCell>
                               <div className="flex flex-wrap gap-1">
                                 {user.allergies.length > 0 ? (
@@ -419,11 +511,15 @@ export default function AdminDashboardContent() {
                                       </span>
                                     ))}
                                     {user.allergies.length > 2 && (
-                                      <span className="text-gray-500 text-xs">+{user.allergies.length - 2}</span>
+                                      <span className="text-gray-500 text-xs">
+                                        +{user.allergies.length - 2}
+                                      </span>
                                     )}
                                   </>
                                 ) : (
-                                  <span className="text-gray-400 text-xs">None</span>
+                                  <span className="text-gray-400 text-xs">
+                                    None
+                                  </span>
                                 )}
                               </div>
                             </TableCell>
@@ -431,25 +527,33 @@ export default function AdminDashboardContent() {
                               <div className="flex flex-wrap gap-1">
                                 {user.healthConditions.length > 0 ? (
                                   <>
-                                    {user.healthConditions.slice(0, 2).map((c) => (
-                                      <span
-                                        key={c}
-                                        className="px-1.5 py-0.5 rounded text-xs text-white whitespace-nowrap"
-                                        style={{ backgroundColor: "#A96B8B" }}
-                                      >
-                                        {c}
-                                      </span>
-                                    ))}
+                                    {user.healthConditions
+                                      .slice(0, 2)
+                                      .map((c) => (
+                                        <span
+                                          key={c}
+                                          className="px-1.5 py-0.5 rounded text-xs text-white whitespace-nowrap"
+                                          style={{ backgroundColor: "#A96B8B" }}
+                                        >
+                                          {c}
+                                        </span>
+                                      ))}
                                     {user.healthConditions.length > 2 && (
-                                      <span className="text-gray-500 text-xs">+{user.healthConditions.length - 2}</span>
+                                      <span className="text-gray-500 text-xs">
+                                        +{user.healthConditions.length - 2}
+                                      </span>
                                     )}
                                   </>
                                 ) : (
-                                  <span className="text-gray-400 text-xs">None</span>
+                                  <span className="text-gray-400 text-xs">
+                                    None
+                                  </span>
                                 )}
                               </div>
                             </TableCell>
-                            <TableCell className="text-center">{user.spiceLevel}</TableCell>
+                            <TableCell className="text-center">
+                              {user.spiceLevel}
+                            </TableCell>
                             <TableCell>{user.frequentMeal}</TableCell>
                             <TableCell>{user.bestFood}</TableCell>
                             <TableCell>{user.worstFood}</TableCell>
@@ -471,7 +575,9 @@ export default function AdminDashboardContent() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                          onClick={() =>
+                            setCurrentPage((p) => Math.max(1, p - 1))
+                          }
                           disabled={currentPage === 1}
                         >
                           <ChevronLeft size={16} />
@@ -479,7 +585,9 @@ export default function AdminDashboardContent() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                          onClick={() =>
+                            setCurrentPage((p) => Math.min(totalPages, p + 1))
+                          }
                           disabled={currentPage === totalPages}
                         >
                           <ChevronRight size={16} />
